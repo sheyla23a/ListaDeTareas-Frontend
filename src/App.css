@@ -1,0 +1,10 @@
+body{
+    min-height: 100%vh;
+    background-color: #8EC5FC;
+     background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
+
+}
+
+.BotonEliminar{
+    border-radius: 60%;
+}
