@@ -1,24 +1,24 @@
 import { Button } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import ListaTareas from "./ListaTareas";
-import { useState,useEffect } from "react";
-import { eliminarTarea,crearTarea,obtenerTareas } from "../helpers/queries";
+import { useState, useEffect } from "react";
+import { eliminarTarea, crearTarea, obtenerTareas } from "../helpers/queries";
+
 const FormularioTarea = () => {
   const [tarea, setTarea] = useState("");
-
   const [tareas, setTareas] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (tarea.trim().length >= 3 && tarea.trim().length <= 50){
-      const nuevaTarea={
+      const nuevaTarea = {
         "nombre" : tarea
       };
-     try{
-      const respuesta = await crearTarea(nuevaTarea);
+      try {
+        const respuesta = await crearTarea(nuevaTarea);
         if (respuesta.status === 201) {
-          cargarTareas()
-          setTareaIngresada("");
+          cargarTareas();
+          setTarea("");
         }
       } catch (error) {
         console.log(error);
@@ -28,22 +28,21 @@ const FormularioTarea = () => {
     }
   };
 
-
-      let handleChange = (e) => {
-    setTareaIngresada(e.target.value);
+  const handleChange = (e) => {
+    setTarea(e.target.value);
   };
 
-  const borrarTarea = async(tareaProps)=>{
-    try{
+  const borrarTarea = async (tareaProps) => {
+    try {
       const respuesta = await eliminarTarea(tareaProps._id);
-      if (respuesta.status === 200){
-        const tareasFiltradas = tareas.filter((tarea)=>tarea._id !== tareaProps._id);
+      if (respuesta.status === 200) {
+        const tareasFiltradas = tareas.filter((tarea) => tarea._id !== tareaProps._id);
         setTareas(tareasFiltradas);
       }
-    }catch(error){
-     console.log(error)
+    } catch (error) {
+      console.log(error);
     }
-  }
+  };
  
   const cargarTareas = async () => {
     try {
@@ -58,20 +57,16 @@ const FormularioTarea = () => {
     cargarTareas();
   }, []);
 
-
   return (
     <section>
       <Form onSubmit={handleSubmit}>
-        <Form.Group
-          className="mb-3 d-flex"
-          controlId="exampleForm.ControlInput1"
-        >
+        <Form.Group className="mb-3 d-flex" controlId="exampleForm.ControlInput1">
           <Form.Control
             type="text"
             placeholder="Ej: Tarea 1"
             minLength={3}
             maxLength={50}
-            onChange={(e) => setTarea(e.target.value)}
+            onChange={handleChange}
             value={tarea}
           />
           <Button variant="dark" className="ms-2" type="submit" size="sm">
