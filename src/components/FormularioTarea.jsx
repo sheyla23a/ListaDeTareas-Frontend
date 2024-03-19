@@ -11,8 +11,7 @@ const FormularioTarea = () => {
     e.preventDefault();
     if (tarea.trim().length > 0){
         setTareas([...tareas,{
-          "nombre" : tarea,
-          "id" : crypto.randomUUID()
+          "nombre" : tarea
         }]);
         setTarea('');
     }else{
@@ -21,7 +20,7 @@ const FormularioTarea = () => {
   };
 
   const borrarTarea = (tareaProps)=>{
-   const tareasFiltradas = tareas.filter((tarea)=>tarea.id !== tareaProps.id);
+   const tareasFiltradas = tareas.filter((tarea)=>tarea !== tareaProps);
    setTareas(tareasFiltradas);
   }
 
